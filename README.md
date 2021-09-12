@@ -15,10 +15,12 @@ import (
 func main() {
   defer tryer.TryWithFatal(recover())
   
-  resp := tryer.TryWithPanic(
+  try := tryer.TryWithPanic
+  
+  resp := try(
     http.Get("https://google.com"))[0].(*http.Response)
 
-  fmt.Printf("\nWritten: %d\n", *tryer.TryWithPanic(
+  fmt.Printf("\nWritten: %d\n", *try(
     io.Copy(os.Stdout, resp.Body))[0].(*int64))
 }
 ```
