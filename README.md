@@ -19,19 +19,19 @@ func main() {
 	resp := tryer.WithPanic(
 		http.Get("https://google.com"))[0].(*http.Response)
 
-  tryer.WithPanic(io.Copy(os.Stdout, resp.Body))
+	tryer.WithPanic(io.Copy(os.Stdout, resp.Body))
 }
 ```
 
 ### Create custom Tryer:
 ```go
 http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
-  try := tryer.New(func(err error) {
-    rw.WriteHeader(http.StatusInternalServerError)
+	try := tryer.New(func(err error) {
+		rw.WriteHeader(http.StatusInternalServerError)
 
-    fmt.Print(rw, err)
-  }
-  
-  ...
+		fmt.Print(rw, err)
+	}
+	
+	...
 })
 ```
