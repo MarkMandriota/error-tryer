@@ -14,7 +14,9 @@ import (
 )
 
 func main() {
-	defer tryer.WithFatal(recover())
+	defer func() {
+		tryer.WithFatal(recover())
+	}()
 
 	resp := tryer.WithPanic(
 		http.Get("https://google.com"))[0].(*http.Response)
