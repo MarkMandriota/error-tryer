@@ -14,10 +14,8 @@ import (
 )
 
 func main() {
-	resp := tryer.WithFatal(
-		http.Get("https://google.com"))[0].(*http.Response)
-
-	tryer.WithFatal(io.Copy(os.Stdout, resp.Body))
+	tryer.WithFatal(io.Copy(os.Stdout, tryer.WithFatal(
+		http.Get("https://google.com"))[0].(*http.Response).Body))
 }
 ```
 
