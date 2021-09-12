@@ -27,6 +27,7 @@ func main() {
 http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
   try := tryer.New(func(err error) {
     rw.WriteHeader(http.StatusInternalServerError)
+
     fmt.Print(rw, err)
   }
   
