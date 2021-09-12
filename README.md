@@ -18,6 +18,6 @@ func main() {
   resp := tryer.WithPanic(
     http.Get("https://google.com"))[0].(*http.Response)
     
-  io.Copy(os.Stdout, resp.Body)
+  tryer.WithPanic(io.Copy(os.Stdout, resp.Body))
 }
 ```
