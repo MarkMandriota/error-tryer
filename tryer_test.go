@@ -12,20 +12,20 @@ import (
 )
 
 func TestTryer(t *testing.T) {
-	defer TryWithPrint(recover())
+	defer WithPrint(recover())
 
-	t.Log(TryWithPrint(foo())[0].(int))
+	t.Log(WithPrint(foo())[0].(int))
 
-	t.Log(TryWithPrint(bar())[0].(string))
+	t.Log(WithPrint(bar())[0].(string))
 
-	t.Log(TryWithPrint(foobar())...)
+	t.Log(WithPrint(foobar())...)
 }
 
 func BenchmarkTryer(b *testing.B) {
 	v, err := foo()
 
 	for i := 0; i < b.N; i++ {
-		_ = TryWithNothing(v, err)
+		_ = WithNothing(v, err)
 	}
 }
 

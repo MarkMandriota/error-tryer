@@ -12,13 +12,13 @@ import (
 )
 
 var (
-	TryWithNothing = New(Nothing())
+	WithNothing = New(Nothing())
 
-	TryWithPrint = New(DefaultPrinter())
+	WithPrint = New(DefaultPrinter())
 
-	TryWithFatal = New(DefaultFataller())
+	WithFatal = New(DefaultFataller())
 
-	TryWithPanic = New(Panicer())
+	WithPanic = New(Panicer())
 )
 
 func Nothing() Outer {
