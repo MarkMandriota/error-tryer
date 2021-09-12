@@ -14,14 +14,10 @@ import (
 )
 
 func main() {
-	defer func() {
-		tryer.WithFatal(recover())
-	}()
-
-	resp := tryer.WithPanic(
+	resp := tryer.WithFatal(
 		http.Get("https://google.com"))[0].(*http.Response)
 
-	tryer.WithPanic(io.Copy(os.Stdout, resp.Body))
+	tryer.WithFatal(io.Copy(os.Stdout, resp.Body))
 }
 ```
 
