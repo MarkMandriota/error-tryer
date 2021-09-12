@@ -2,7 +2,7 @@
 // Use of this source code is governed by MIT-style
 // license that can be found in the LICENSE file.
 
-// tryer - package provides new simply error handling method.
+// Package tryer - provides new simply error handling method.
 package tryer
 
 type (
