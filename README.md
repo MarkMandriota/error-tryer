@@ -18,9 +18,6 @@ func main() {
   resp := tryer.WithPanic(
     http.Get("https://google.com"))[0].(*http.Response)
     
-  written := tryer.WithPanic(
-    io.Copy(os.Stdout, resp.Body))[0].(*int64)
-    
-  fmt.Printf("\nWritten: %d\n", *written)
+  io.Copy(os.Stdout, resp.Body)
 }
 ```
