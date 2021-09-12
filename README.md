@@ -19,8 +19,10 @@ func main() {
   
   resp := try(
     http.Get("https://google.com"))[0].(*http.Response)
-
-  fmt.Printf("\nWritten: %d\n", *try(
-    io.Copy(os.Stdout, resp.Body))[0].(*int64))
+    
+  written := try(
+    io.Copy(os.Stdout, resp.Body))[0].(*int64)
+    
+  fmt.Printf("\nWritten: %d\n", *written)
 }
 ```
