@@ -54,3 +54,9 @@ func Panicer() Outer {
 		panic(err)
 	}
 }
+
+func Pusher(s chan<- error) Outer {
+	return func(err error) {
+		s <- err
+	}
+}
