@@ -14,19 +14,33 @@ type (
 	Tryer func(v ...interface{}) []interface{}
 )
 
-// New - construct new Tryer with Outer.
 func New(o Outer) Tryer {
 	return func(v ...interface{}) []interface{} {
 		j := 0
 
-		for i := 0; i < len(v); i++ {
-			switch v[i].(type) {
-			case error:
-				o(v[i].(error))
-			case nil:
-			default:
+		for i := range v {
+			if x, ok := v[i].(error); ok && x != nil {
+				o(x)
+			} else {
 				v[j] = v[i]
 				j++
+			}
+		}
+
+		return v[:j]
+	}
+}
+
+func New1(o Outer) Tryer {
+	return func(v ...interface{}) []interface{} {
+		j := len(v)
+
+		for i := len(v) - 1; i > 0; i-- {
+			if x, ok := v[i].(error); ok && x != nil {
+				o(x)
+			} else {
+				j--
+				v[j] = v[i]
 			}
 		}
 

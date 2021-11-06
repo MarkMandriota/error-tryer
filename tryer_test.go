@@ -22,10 +22,22 @@ func TestTryer(t *testing.T) {
 }
 
 func BenchmarkTryer(b *testing.B) {
-	v, err := foo()
+	vx, vy, errx, erry := foobar()
+
+	try := New(Nothing())
 
 	for i := 0; i < b.N; i++ {
-		_ = WithNothing(v, err)
+		_ = try(vx, vy, errx, erry)
+	}
+}
+
+func BenchmarkTryer1(b *testing.B) {
+	vx, vy, errx, erry := foobar()
+
+	try := New1(Nothing())
+
+	for i := 0; i < b.N; i++ {
+		_ = try(vx, vy, errx, erry)
 	}
 }
 

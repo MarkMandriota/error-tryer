@@ -1,7 +1,7 @@
 # error-tryer
 provides new simply error handling method
 
-### Example:
+### Using default tryers:
 ```go
 package main
 
@@ -19,15 +19,13 @@ func main() {
 }
 ```
 
-### Create custom Tryer:
+### Create custom tryer:
 ```go
 http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
-	try := tryer.New(func(err error) {
+	mytryer := tryer.Compose(tryer.New(func(err error) {
 		rw.WriteHeader(http.StatusInternalServerError)
+	}, tryer.Printer(log.Default()))
 
-		fmt.Print(rw, err)
-	}
-	
 	...
 })
 ```

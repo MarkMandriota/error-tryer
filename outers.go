@@ -6,17 +6,15 @@
 package tryer
 
 import (
-	"io"
 	"log"
-	"os"
 )
 
 var (
 	WithNothing = New(Nothing())
 
-	WithPrint = New(DefaultPrinter())
+	WithPrint = New(Printer(log.Default()))
 
-	WithFatal = New(DefaultFataller())
+	WithFatal = New(Fataller(log.Default()))
 
 	WithPanic = New(Panicer())
 )
@@ -25,28 +23,16 @@ func Nothing() Outer {
 	return func(err error) {}
 }
 
-func Printer(w io.Writer, prefix string, flag int) Outer {
-	l := log.New(w, prefix, flag)
-
+func Printer(l *log.Logger) Outer {
 	return func(err error) {
 		l.Println(err)
 	}
 }
 
-func DefaultPrinter() Outer {
-	return Printer(os.Stderr, "", log.LstdFlags)
-}
-
-func Fataller(w io.Writer, prefix string, flag int) Outer {
-	l := log.New(w, prefix, flag)
-
+func Fataller(l *log.Logger) Outer {
 	return func(err error) {
 		l.Fatalln(err)
 	}
-}
-
-func DefaultFataller() Outer {
-	return Fataller(os.Stderr, "", log.LstdFlags)
 }
 
 func Panicer() Outer {
@@ -55,8 +41,16 @@ func Panicer() Outer {
 	}
 }
 
-func Pusher(s chan<- error) Outer {
+func Sender(s chan<- error) Outer {
 	return func(err error) {
 		s <- err
+	}
+}
+
+func Compose(o ...Outer) Outer {
+	return func(err error) {
+		for _, outer := range o {
+			outer(err)
+		}
 	}
 }
