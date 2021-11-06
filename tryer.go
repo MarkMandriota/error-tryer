@@ -16,23 +16,6 @@ type (
 
 func New(o Outer) Tryer {
 	return func(v ...interface{}) []interface{} {
-		j := 0
-
-		for i := range v {
-			if x, ok := v[i].(error); ok && x != nil {
-				o(x)
-			} else {
-				v[j] = v[i]
-				j++
-			}
-		}
-
-		return v[:j]
-	}
-}
-
-func New1(o Outer) Tryer {
-	return func(v ...interface{}) []interface{} {
 		j := len(v)
 
 		for i := len(v) - 1; i > 0; i-- {

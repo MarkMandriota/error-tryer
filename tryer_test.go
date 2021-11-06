@@ -31,16 +31,6 @@ func BenchmarkTryer(b *testing.B) {
 	}
 }
 
-func BenchmarkTryer1(b *testing.B) {
-	vx, vy, errx, erry := foobar()
-
-	try := New1(Nothing())
-
-	for i := 0; i < b.N; i++ {
-		_ = try(vx, vy, errx, erry)
-	}
-}
-
 func foo() (int, error) {
 	return 123, errors.New("error foo: something went wrong")
 }
